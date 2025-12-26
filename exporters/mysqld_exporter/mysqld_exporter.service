@@ -1,0 +1,23 @@
+[Unit]
+Description=MySQL Exporter
+Documentation=https://github.com/prometheus/mysqld_exporter
+After=network-online.target mysql.service
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+EnvironmentFile=/etc/mysqld_exporter/.env
+ExecStart=/bin/mysqld_exporter/mysqld_exporter \
+    --web.listen-address=:9104 \
+    --collect.info_schema.tables \
+    --collect.info_schema.innodb_metrics \
+    --collect.global_status \
+    --collect.engine_innodb_status
+
+SyslogIdentifier=mysqld_exporter
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+# windows_exporter version - 0.31.3
+
+telemetry:
+  path: /metrics
+
+collectors:
+  enabled: "cpu,logical_disk,net,os,service,system,time,memory"
+

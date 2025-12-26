@@ -1,0 +1,30 @@
+[Unit]
+Description=MinIO S3-compatible object storage
+Documentation=https://min.io/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+
+# Environment
+EnvironmentFile=/etc/minio/minio.env
+
+# Binary
+ExecStart=/bin/minio/minio server ${MINIO_DATA_DIR} \
+  --address ${MINIO_ADDRESS} \
+  --console-address ${MINIO_CONSOLE_ADDRESS}
+
+Restart=always
+RestartSec=5
+LimitNOFILE=65536
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+[Unit]
+Description=Prometheus
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+ExecStart=/bin/prometheus/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/var/lib/prometheus \
+    --storage.tsdb.retention.time=2h \
+    --web.listen-address=:9090 \
+    --web.enable-lifecycle \
+    --web.enable-admin-api
+
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+SyslogIdentifier=prometheus
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

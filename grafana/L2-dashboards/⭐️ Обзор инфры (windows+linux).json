@@ -1,0 +1,1787 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.2.1"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "- Сортировка по колонкам\n\n- hdd_exception - список исключений для Disk stat - принудительный good\n\n- hdd_exception (All) = no exception",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Instance"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "left"
+              },
+              {
+                "id": "custom.width",
+                "value": 180
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Go to ${__value.text}",
+                    "url": "/d/${linux_redirect_uid}?var-instance=${__value.text}&var-back_uid=${back_uid}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "red",
+                        "text": "DOWN"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 86400
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAM %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk %"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 232
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk stat"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "from": 0,
+                      "result": {
+                        "index": 0,
+                        "text": "good"
+                      },
+                      "to": 69
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 70,
+                      "result": {
+                        "index": 1,
+                        "text": "norm"
+                      },
+                      "to": 89
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 90,
+                      "result": {
+                        "index": 2,
+                        "text": "bad"
+                      },
+                      "to": 100
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 3,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 90
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk I/O"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "iops"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Traffic In"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Traffic Out"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Disk stat"
+          }
+        ]
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "time() - node_boot_time_seconds{job=\"$node_exporter\"}",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{job=\"$node_exporter\", mode=\"idle\"}[5m])) * 100)",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "100 * (1 - (node_memory_MemAvailable_bytes{job=\"$node_exporter\"} / node_memory_MemTotal_bytes{job=\"$node_exporter\"}))",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "round(100 - (node_filesystem_avail_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\"} / node_filesystem_size_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\"} * 100))",
+          "format": "table",
+          "instant": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (rate(node_disk_read_bytes_total{job=\"$node_exporter\"}[5m]) + rate(node_disk_written_bytes_total{job=\"$node_exporter\"}[5m]))",
+          "format": "table",
+          "instant": true,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (rate(node_disk_reads_completed_total{job=\"$node_exporter\"}[5m]) + rate(node_disk_writes_completed_total{job=\"$node_exporter\"}[5m]))",
+          "format": "table",
+          "instant": true,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (rate(node_network_receive_bytes_total{job=\"$node_exporter\", device!~\"lo\"}[5m]))",
+          "format": "table",
+          "instant": true,
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (rate(node_network_transmit_bytes_total{job=\"$node_exporter\", device!~\"lo\"}[5m]))",
+          "format": "table",
+          "instant": true,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "(node_boot_time_seconds{job=\"$node_exporter\", instance=~\"^($linux_hdd_exception)$\"} * 0 + 50) or max by (instance) (round(100 - (node_filesystem_avail_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\", instance!~\"^($linux_hdd_exception)$\"} / node_filesystem_size_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\", instance!~\"^(linux_$hdd_exception)$\"} * 100)))",
+          "format": "table",
+          "instant": true,
+          "refId": "I"
+        }
+      ],
+      "title": "Linux",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "device": true,
+              "fstype": true,
+              "job": true
+            },
+            "indexByName": {
+              "Value #A": 1,
+              "Value #B": 2,
+              "Value #C": 3,
+              "Value #D": 5,
+              "Value #E": 7,
+              "Value #F": 8,
+              "Value #G": 9,
+              "Value #H": 10,
+              "Value #I": 6,
+              "instance": 0,
+              "mountpoint": 4
+            },
+            "renameByName": {
+              "Value #A": "Uptime",
+              "Value #B": "CPU %",
+              "Value #C": "RAM %",
+              "Value #D": "Disk %",
+              "Value #E": "Disk I/O",
+              "Value #F": "IOPS",
+              "Value #G": "Traffic In",
+              "Value #H": "Traffic Out",
+              "Value #I": "Disk stat",
+              "instance": "Instance",
+              "mountpoint": "Mount"
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "CPU %": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk %": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk I/O": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk stat": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "IOPS": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Instance": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Mount": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "aggregate"
+              },
+              "RAM %": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Traffic In": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Traffic Out": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Uptime": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Disk % (allValues)": false,
+              "Disk I/O (lastNotNull)": true,
+              "IOPS (lastNotNull)": true,
+              "Mount (allValues)": true,
+              "Traffic In (lastNotNull)": true,
+              "Traffic Out (lastNotNull)": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "CPU % (lastNotNull)": 2,
+              "Disk % (allValues)": 5,
+              "Disk I/O (lastNotNull)": 6,
+              "Disk stat (lastNotNull)": 4,
+              "IOPS (lastNotNull)": 7,
+              "Instance": 0,
+              "RAM % (lastNotNull)": 3,
+              "Traffic In (lastNotNull)": 8,
+              "Traffic Out (lastNotNull)": 9,
+              "Uptime (lastNotNull)": 1
+            },
+            "renameByName": {
+              "CPU % (lastNotNull)": "CPU %",
+              "Disk % (allValues)": "Disk %",
+              "Disk I/O (lastNotNull)": "Disk I/O",
+              "Disk stat (lastNotNull)": "Disk stat",
+              "IOPS (lastNotNull)": "IOPS",
+              "RAM % (lastNotNull)": "RAM %",
+              "Traffic In (lastNotNull)": "Traffic In",
+              "Traffic Out (lastNotNull)": "Traffic Out",
+              "Uptime (lastNotNull)": "Uptime"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Uptime"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "- Сортировка по колонкам\n\n- disk_exception - list of instances to force Disk stat to 'good'\n\n- disk_exception (All) = no exception\n\n- Compatible with Windows Exporter 0.29.2 and 0.31.3",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Instance"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "left"
+              },
+              {
+                "id": "custom.width",
+                "value": 182
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Go to ${__value.text}",
+                    "url": "/d/${windows_redirect_uid}?var-instance=${__value.text}&var-back_uid=${back_uid}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "red",
+                        "text": "DOWN"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 86400
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAM %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk %"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 221
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk stat"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "from": 0,
+                      "result": {
+                        "index": 0,
+                        "text": "good"
+                      },
+                      "to": 69
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 70,
+                      "result": {
+                        "index": 1,
+                        "text": "norm"
+                      },
+                      "to": 89
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 90,
+                      "result": {
+                        "index": 2,
+                        "text": "bad"
+                      },
+                      "to": 100
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 3,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 92
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk I/O"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "iops"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Traffic In"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Traffic Out"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 0,
+                        "text": "-"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 17,
+        "x": 0,
+        "y": 6
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Disk stat"
+          }
+        ]
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "time() - (\r\n  windows_system_boot_time_timestamp{job=\"$windows_exporter\"}\r\n    or windows_system_system_up_time{job=\"$windows_exporter\"}\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{job=\"$windows_exporter\", mode=\"idle\"}[$__rate_interval])) * 100)",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "100 * (1 - (\r\n  (windows_memory_available_bytes{job=\"$windows_exporter\"}\r\n    or windows_os_physical_memory_free_bytes{job=\"$windows_exporter\"})\r\n /\r\n  (windows_memory_physical_total_bytes{job=\"$windows_exporter\"}\r\n    or windows_cs_physical_memory_bytes{job=\"$windows_exporter\"})\r\n))",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "round(\r\n  100 - 100 *\r\n  (\r\n    windows_logical_disk_free_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}\r\n      or windows_disk_free_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}\r\n  )\r\n  /\r\n  (\r\n    windows_logical_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}\r\n      or windows_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}\r\n  )\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (\r\n  (\r\n    rate(windows_logical_disk_read_bytes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n      or rate(windows_disk_read_bytes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n  )\r\n  +\r\n  (\r\n    rate(windows_logical_disk_write_bytes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n      or rate(windows_disk_write_bytes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n  )\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (\r\n  rate(windows_logical_disk_reads_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval]) +\r\n  rate(windows_logical_disk_writes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n)\r\nor\r\nsum by (instance) (\r\n  rate(windows_disk_reads_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval]) +\r\n  rate(windows_disk_writes_total{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\"}[$__rate_interval])\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (\r\n  rate(windows_net_bytes_received_total{job=\"$windows_exporter\", nic!~\"isatap.*|Pseudo.*\"}[$__rate_interval])\r\n  or\r\n  rate(windows_network_bytes_received_total{job=\"$windows_exporter\", nic!~\"isatap.*|Pseudo.*\"}[$__rate_interval])\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance) (rate(windows_net_bytes_sent_total{job=\"$windows_exporter\", nic!~\"isatap.*|Pseudo.*\"}[$__rate_interval]) or rate(windows_network_bytes_sent_total{job=\"$windows_exporter\", nic!~\"isatap.*|Pseudo.*\"}[$__rate_interval]))",
+          "format": "table",
+          "instant": true,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "(\r\n  max by (instance) (\r\n    windows_logical_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance=~\"^($windows_hdd_exception)$\"}\r\n      or windows_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance=~\"^($windows_hdd_exception)$\"}\r\n  ) * 0 + 50\r\n)\r\nor\r\nmax by (instance) (\r\n  round(\r\n    100 - (\r\n      (windows_logical_disk_free_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance!~\"^($windows_hdd_exception)$\"}\r\n        or windows_disk_free_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance!~\"^($windows_hdd_exception)$\"})\r\n      /\r\n      (windows_logical_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance!~\"^($windows_hdd_exception)$\"}\r\n        or windows_disk_size_bytes{job=\"$windows_exporter\", volume!~\"HarddiskVolume.*\", instance!~\"^($windows_hdd_exception)$\"})\r\n      * 100\r\n    )\r\n  )\r\n)",
+          "format": "table",
+          "instant": true,
+          "refId": "I"
+        }
+      ],
+      "title": "Windows",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "nic": true,
+              "volume": true
+            },
+            "indexByName": {
+              "Value #A": 1,
+              "Value #B": 2,
+              "Value #C": 3,
+              "Value #D": 5,
+              "Value #E": 7,
+              "Value #F": 8,
+              "Value #G": 9,
+              "Value #H": 10,
+              "Value #I": 6,
+              "instance": 0,
+              "volume": 4
+            },
+            "renameByName": {
+              "Value #A": "Uptime",
+              "Value #B": "CPU %",
+              "Value #C": "RAM %",
+              "Value #D": "Disk %",
+              "Value #E": "Disk I/O",
+              "Value #F": "IOPS",
+              "Value #G": "Traffic In",
+              "Value #H": "Traffic Out",
+              "Value #I": "Disk stat",
+              "instance": "Instance",
+              "volume": "Volume"
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "CPU %": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk %": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk I/O": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Disk stat": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "IOPS": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Instance": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "RAM %": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Traffic In": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Traffic Out": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Uptime": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Volume": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Disk I/O (lastNotNull)": true,
+              "IOPS (lastNotNull)": true,
+              "Traffic In (lastNotNull)": true,
+              "Traffic Out (lastNotNull)": true,
+              "Volume (allValues)": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "CPU % (lastNotNull)": 2,
+              "Disk % (allValues)": 5,
+              "Disk I/O (lastNotNull)": 6,
+              "Disk stat (lastNotNull)": 4,
+              "IOPS (lastNotNull)": 7,
+              "Instance": 0,
+              "RAM % (lastNotNull)": 3,
+              "Traffic In (lastNotNull)": 8,
+              "Traffic Out (lastNotNull)": 9,
+              "Uptime (lastNotNull)": 1
+            },
+            "renameByName": {
+              "CPU % (lastNotNull)": "CPU %",
+              "Disk % (allValues)": "Disk %",
+              "Disk I/O (lastNotNull)": "Disk I/O",
+              "Disk stat (lastNotNull)": "Disk stat",
+              "IOPS (lastNotNull)": "IOPS",
+              "RAM % (lastNotNull)": "RAM %",
+              "Traffic In (lastNotNull)": "Traffic In",
+              "Traffic Out (lastNotNull)": "Traffic Out",
+              "Uptime (lastNotNull)": "Uptime"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Uptime"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "definition": "label_values(up, job)",
+        "label": "node_exporter",
+        "name": "node_exporter",
+        "options": [],
+        "query": {
+          "qryType": 5,
+          "query": "label_values(up, job)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allValue": "/dev/null",
+        "current": {},
+        "definition": "label_values(up{job=\"$node_exporter\"},instance)",
+        "description": "Select instances to force Disk stat to 'good' regardless of actual disk usage. Leave empty to use normal thresholds.",
+        "includeAll": true,
+        "label": "linux_hdd_exception",
+        "multi": true,
+        "name": "linux_hdd_exception",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(up{job=\"$node_exporter\"},instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "shumilov-full-node_exporter",
+          "value": "shumilov-full-node_exporter"
+        },
+        "description": "UID дашборда для редиректа",
+        "label": "linux_redirect_uid",
+        "name": "linux_redirect_uid",
+        "options": [
+          {
+            "selected": true,
+            "text": "shumilov-full-node_exporter",
+            "value": "shumilov-full-node_exporter"
+          }
+        ],
+        "query": "shumilov-full-node_exporter",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "shumilov-infra-table",
+          "value": "shumilov-infra-table"
+        },
+        "description": "UID дашборда на который можно будет вернуться (для кнопки Back) ",
+        "label": "back_uid",
+        "name": "back_uid",
+        "options": [
+          {
+            "selected": true,
+            "text": "shumilov-infra-table",
+            "value": "shumilov-infra-table"
+          }
+        ],
+        "query": "shumilov-infra-table",
+        "type": "textbox"
+      },
+      {
+        "current": {},
+        "definition": "label_values(up, job)",
+        "label": "windows_exporter",
+        "name": "windows_exporter",
+        "options": [],
+        "query": {
+          "qryType": 5,
+          "query": "label_values(up, job)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allValue": "/dev/null",
+        "current": {},
+        "definition": "label_values(up{job=\"$windows_exporter\"},instance)",
+        "description": "Select instances to force Disk stat to 'good' regardless of actual disk usage. Leave empty to use normal thresholds.",
+        "includeAll": true,
+        "label": "windows_hdd_exception",
+        "multi": true,
+        "name": "windows_hdd_exception",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(up{job=\"$windows_exporter\"},instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "shumilov-full-windows_exporter",
+          "value": "shumilov-full-windows_exporter"
+        },
+        "description": "Dashboard UID for redirect",
+        "label": "windows_redirect_uid",
+        "name": "windows_redirect_uid",
+        "options": [
+          {
+            "selected": true,
+            "text": "shumilov-full-windows_exporter",
+            "value": "shumilov-full-windows_exporter"
+          }
+        ],
+        "query": "shumilov-full-windows_exporter",
+        "type": "textbox"
+      },
+      {
+        "baseFilters": [],
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "filters": [],
+        "hide": 2,
+        "name": "Filters",
+        "type": "adhoc"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Moscow",
+  "title": "⭐️ Обзор инфры (windows+linux)",
+  "uid": "shumilov-infra-table",
+  "version": 17,
+  "weekStart": ""
+}

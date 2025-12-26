@@ -1,0 +1,27 @@
+[Unit]
+Description=Thanos Sidecar
+After=network.target prometheus.service
+Wants=prometheus.service
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+
+ExecStart=/bin/thanos/thanos sidecar \
+  --tsdb.path=/var/lib/prometheus \
+  --prometheus.url=http://127.0.0.1:9090 \
+  --grpc-address=0.0.0.0:10901 \
+  --http-address=0.0.0.0:10902 \
+  --objstore.config-file=/etc/thanos/s3.yml
+
+Restart=on-failure
+RestartSec=3
+
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=Process Exporter
+Documentation=https://github.com/ncabatoff/process-exporter
+After=network-online.target
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+ExecStart=/bin/process_exporter/process_exporter \
+    --web.listen-address=:9256 \
+    --config.path=/etc/process_exporter/config.yml
+
+SyslogIdentifier=process_exporter
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+[Unit]
+Description=CUBA Application with JMX Exporter
+After=network-online.target postgresql.service
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+WorkingDirectory=/var/lib/cuba-app
+
+# Java application with JMX Prometheus agent
+ExecStart=/usr/bin/java \
+    -javaagent:/bin/cuba_jvm/jmx_prometheus_javaagent-1.0.1.jar=8080:/etc/cuba_jvm/config.yml \
+    -Xmx2048m \
+    -Xms512m \
+    -jar /var/lib/cuba-app/app.jar
+
+SyslogIdentifier=cuba-app
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,36 @@
+# JMX Prometheus Javaagent configuration
+# Export all JMX metrics
+---
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+
+rules:
+  # JVM Memory
+  - pattern: "java.lang<type=Memory><HeapMemoryUsage>(.+): (.+)"
+    name: jvm_memory_heap_$1
+    value: $2
+    type: GAUGE
+
+  # JVM Garbage Collector
+  - pattern: "java.lang<type=GarbageCollector, name=(.+)><>(.+): (.+)"
+    name: jvm_gc_$2
+    labels:
+      gc: $1
+    value: $3
+    type: GAUGE
+
+  # JVM Threads
+  - pattern: "java.lang<type=Threading><>(.+): (.+)"
+    name: jvm_threads_$1
+    value: $2
+    type: GAUGE
+
+  # Tomcat/CUBA specific
+  - pattern: 'Catalina<type=ThreadPool, name="(.+)"><>(.+):'
+    name: tomcat_threadpool_$2
+    labels:
+      pool: $1
+    type: GAUGE
+
+  # Default rule - export everything else
+  - pattern: ".*"

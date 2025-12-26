@@ -1,0 +1,140 @@
+{
+  "version": "1.0.0",
+  "description": "Machine-readable checklist for Grafana dashboard development based on shumilovsergey/grafana manifest",
+  "core_principles": {
+    "stateless_design": {
+      "rule": "No local state storage - everything must be reproducible and reusable",
+      "enforcement": "Use variables and templates only, no hardcoded instance-specific values"
+    },
+    "variable_driven": {
+      "rule": "Variables are the ONLY mechanism for inter-panel communication and state management",
+      "enforcement": "All dynamic behavior must use dashboard variables like $instance, $job"
+    },
+    "two_tier_hierarchy": {
+      "L2": "High-level overview with minimal detail - for system-wide monitoring",
+      "L1": "Low-level deep dive - for specific resource or exporter analysis"
+    }
+  },
+  "technical_requirements": {
+    "instance_labeling": {
+      "rule": "Each Prometheus target must have explicit instance label",
+      "pattern": "instance=\"server_name\"",
+      "example": "{instance=\"$instance\", job=\"$job\"}"
+    },
+    "dynamic_rate_intervals": {
+      "rule": "NEVER use hardcoded rate intervals",
+      "required_pattern": "[$__rate_interval]",
+      "forbidden_patterns": ["[5m]", "[1m]", "[10m]"],
+      "example": "rate(metric[$__rate_interval])"
+    },
+    "result_aggregation": {
+      "rule": "When metrics exceed 5 results, must aggregate",
+      "methods": ["sum()", "topk(5, ...)"],
+      "enforcement": "Use variables to control aggregation behavior"
+    },
+    "id_field": {
+      "rule": "Dashboard ID must allow import without conflicts",
+      "required_value": "0 or null"
+    }
+  },
+  "visualization_standards": {
+    "line_style": {
+      "thickness": 1,
+      "opacity": "10%",
+      "fill_opacity": 10
+    },
+    "mandatory_elements": {
+      "units": "REQUIRED - every metric must have appropriate unit",
+      "legends": "REQUIRED - graphs without labels are meaningless",
+      "panel_descriptions": "REQUIRED - explain what the panel shows"
+    },
+    "paired_metrics": {
+      "rule": "Related metrics must display together using positive/negative planes",
+      "examples": [
+        "Read/Write operations",
+        "Transmit/Receive network traffic",
+        "Inbound/Outbound connections"
+      ],
+      "implementation": "Use negative Y-axis transformation for second metric"
+    },
+    "rounding": {
+      "rule": "High-level dashboards (L2) must apply aggressive rounding",
+      "purpose": "Reduce noise while preserving trends",
+      "methods": ["round()", "floor()", "ceil()"]
+    },
+    "panel_documentation": {
+      "rule": "Each panel MUST include interpretation guidelines",
+      "required_info": [
+        "What the metric measures",
+        "Threshold explanations (e.g., >80% = problem)",
+        "What action to take if threshold exceeded"
+      ]
+    }
+  },
+  "query_patterns": {
+    "rate_functions": {
+      "correct": "rate(metric[$__rate_interval])",
+      "incorrect": "rate(metric[5m])"
+    },
+    "aggregation": {
+      "with_variables": "sum by (instance) (metric{instance=\"$instance\", job=\"$job\"})",
+      "topk_pattern": "topk(5, sum by (instance) (metric{job=\"$job\"}))"
+    },
+    "variable_usage": {
+      "rule": "ALL queries must use template variables",
+      "standard_variables": ["$instance", "$job", "$node_exporter"],
+      "datasource_variable": "${DS_PROMETHEUS}"
+    }
+  },
+  "common_mistakes_to_avoid": {
+    "hardcoded_intervals": "NEVER use [5m], [1m], etc. Always use [$__rate_interval]",
+    "missing_labels": "NEVER forget units, legends, or descriptions",
+    "unlabeled_graphs": "Graph without labels is like ruler without numbers - useless",
+    "too_many_series": "If more than 5 series, aggregate or use topk()",
+    "no_documentation": "Every panel needs threshold explanations",
+    "local_state": "No instance-specific hardcoding - use variables",
+    "wrong_id": "Dashboard ID must be 0 or null for portability"
+  },
+  "validation_checklist": {
+    "before_save": [
+      "✓ All queries use [$__rate_interval] instead of hardcoded intervals",
+      "✓ All queries use $instance and $job variables",
+      "✓ Every panel has units configured",
+      "✓ Every panel has legend labels",
+      "✓ Every panel has description with threshold info",
+      "✓ Paired metrics (read/write, tx/rx) use positive/negative display",
+      "✓ Line thickness = 1, opacity = 10%",
+      "✓ Dashboard ID = 0 or null",
+      "✓ No hardcoded instance names or datasource UIDs (use variables)",
+      "✓ Queries with >5 results are aggregated"
+    ]
+  },
+  "style_guide": {
+    "line_opacity": 10,
+    "line_width": 1,
+    "rounding_for_overview": true,
+    "always_show_units": true,
+    "always_show_legend": true
+  },
+  "dashboard_types": {
+    "L2_overview": {
+      "characteristics": "High-level, multiple instances, aggressive rounding, compact panels",
+      "example_file": "node-table.json"
+    },
+    "L1_detailed": {
+      "characteristics": "Single instance deep dive, full precision, detailed graphs",
+      "example_file": "server-detail.json"
+    }
+  },
+  "prometheus_specifics": {
+    "required_labels": ["instance", "job"],
+    "rate_interval": "$__rate_interval",
+    "aggregation_threshold": 5,
+    "preferred_functions": [
+      "rate() with [$__rate_interval]",
+      "sum by (label)",
+      "topk(n, query)",
+      "round() for L2 dashboards"
+    ]
+  }
+}

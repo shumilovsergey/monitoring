@@ -1,0 +1,27 @@
+[Unit]
+Description=Grafana
+Documentation=https://grafana.com/docs/
+After=network-online.target
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+WorkingDirectory=/var/lib/grafana
+
+Environment="GF_PATHS_CONFIG=/etc/grafana/grafana.ini"
+Environment="GF_PATHS_DATA=/var/lib/grafana"
+Environment="GF_PATHS_LOGS=/var/log/grafana"
+Environment="GF_PATHS_PLUGINS=/var/lib/grafana/plugins"
+Environment="GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+
+ExecStart=/bin/grafana/grafana-server \
+    --config=${GF_PATHS_CONFIG} \
+    --pidfile=/var/run/grafana/grafana-server.pid
+
+SyslogIdentifier=grafana
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

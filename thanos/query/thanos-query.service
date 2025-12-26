@@ -1,0 +1,36 @@
+[Unit]
+Description=Thanos Query
+After=network.target
+
+[Service]
+Type=simple
+User=srv
+Group=srv
+
+#-----------------------------------
+# grpc-address=0.0.0.0:10999 не используется, но если его не задать - займется порт 10901 -а это потенциальный порт gateway
+# не забываем добавлять в prometheus
+# --storage.tsdb.min-block-duration=2h
+# --storage.tsdb.max-block-duration=2h
+#
+#global:
+#  external_labels:
+#    cluster: "your_cluster_name"
+#-----------------------------------
+
+ExecStart=/bin/thanos/thanos query \
+  --http-address=0.0.0.0:9090 \
+  --grpc-address=0.0.0.0:10999 \
+  --store.sd-files=/etc/thanos/targets.yml
+
+Restart=on-failure
+RestartSec=3
+
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target
+

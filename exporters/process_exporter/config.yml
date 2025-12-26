@@ -1,0 +1,5 @@
+process_names:
+  # Group processes by name
+  - name: "{{.Comm}}"
+    cmdline:
+    - '.+'

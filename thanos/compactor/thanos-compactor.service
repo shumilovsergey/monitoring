@@ -1,0 +1,30 @@
+[Unit]
+Description=Thanos Compactor
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=srv
+Group=srv
+Type=simple
+
+ExecStart=/bin/thanos/thanos compact \
+  --data-dir=/var/lib/thanos/compact \
+  --objstore.config-file=/etc/thanos/s3.yaml \
+  --retention.resolution-raw=14d \
+  --retention.resolution-5m=180d \
+  --retention.resolution-1h=2y \
+  --http-address=0.0.0.0:10902 \
+  --wait
+
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=65536
+
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target
