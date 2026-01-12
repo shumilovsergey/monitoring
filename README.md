@@ -33,3 +33,4 @@ sudo chown -R srv:srv /path/from/service/
 - [MySQL Exporter](exporters/mysqld_exporter/README.md) — метрики MySQL/MariaDB
 - [Windows Exporter](exporters/windows_exporter/README.md) — системные метрики Windows
 - [CUBA JVM](exporters/cuba_jvm/README.md) — JMX метрики Java приложений
+- [Blackbox Exporter](exporters/blackbox_exporter/README.md) — мониторинг web ресурсов
