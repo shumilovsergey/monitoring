@@ -7,6 +7,9 @@ Prometheus нужен для:
 - федерации метрик из удалённых Prometheus
 - предоставления метрик в Thanos Sidecar
 
+Fed-Prometheus нужен для:
+- фильтрации собраных метрик в Prometheus
+
 ## Схема
 
 ```

@@ -24,6 +24,7 @@ sudo chown -R srv:srv /path/from/service/
 
 ### Основные сервисы
 - [Prometheus](prometheus/README.md) — сбор и хранение метрик
+- [Fed-Prometheus](prometheus/README.md) — фильтрация метрик
 - [Thanos](thanos/README.md) — агрегация и долгосрочное хранение
 - [Grafana](grafana/README.md) — визуализация и дашборды
 
