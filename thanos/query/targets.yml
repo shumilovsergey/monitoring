@@ -1,14 +1,14 @@
 # подключаем прометеусы
 
 - targets:
-  - "prometheus-a.example.com:10901"
+  - "fed-prometheus-sidecar:10901"
   labels:
-    cluster: prom-a
+    cluster: fed-prometheus
 
-- targets:
-  - "prometheus-b.example.com:10901"
-  labels:
-    cluster: prom-b
+# - targets:
+#   - "prometheus-b-sidecar:10901"
+#   labels:
+#     cluster: prom-b
 
 # подключаем gateway
 # без лейблов - чтобы не создавать ощущение похожести с пунктами выше

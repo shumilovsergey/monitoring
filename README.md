@@ -2,7 +2,7 @@
 
 Мониторинг инфраструктуры на базе Prometheus, Thanos и Grafana.
 
-![Архитектура](static/monitoring.png)
+![Архитектура](static/monitoring-2.png)
 
 ## Подготовка системы
 
