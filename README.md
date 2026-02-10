@@ -35,3 +35,4 @@ sudo chown -R srv:srv /path/from/service/
 - [Windows Exporter](exporters/windows_exporter/README.md) — системные метрики Windows
 - [CUBA JVM](exporters/cuba_jvm/README.md) — JMX метрики Java приложений
 - [Blackbox Exporter](exporters/blackbox_exporter/README.md) — мониторинг web ресурсов
+- [Docker](exporters/docker/README.md) — встроенные метрики Docker daemon
