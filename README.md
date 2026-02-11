@@ -36,3 +36,4 @@ sudo chown -R srv:srv /path/from/service/
 - [CUBA JVM](exporters/cuba_jvm/README.md) — JMX метрики Java приложений
 - [Blackbox Exporter](exporters/blackbox_exporter/README.md) — мониторинг web ресурсов
 - [Docker](exporters/docker/README.md) — встроенные метрики Docker daemon
+- [cAdvisor](exporters/cadvisor/README.md) — метрики контейнеров 

@@ -29,8 +29,8 @@
     },
     "result_aggregation": {
       "rule": "When metrics exceed 5 results, must aggregate",
-      "methods": ["sum()", "topk(5, ...)"],
-      "enforcement": "Use variables to control aggregation behavior"
+      "methods": ["sum()", "topk($top_x, ...)"],
+      "enforcement": "NEVER hardcode topk(5, ...) — use a $top_x dashboard variable (type: custom, values: 3,5,10,15,20) so the user can adjust the number of displayed series"
     },
     "id_field": {
       "rule": "Dashboard ID must allow import without conflicts",
@@ -78,11 +78,11 @@
     },
     "aggregation": {
       "with_variables": "sum by (instance) (metric{instance=\"$instance\", job=\"$job\"})",
-      "topk_pattern": "topk(5, sum by (instance) (metric{job=\"$job\"}))"
+      "topk_pattern": "topk($top_x, sum by (instance) (metric{job=\"$job\"}))"
     },
     "variable_usage": {
       "rule": "ALL queries must use template variables",
-      "standard_variables": ["$instance", "$job", "$node_exporter"],
+      "standard_variables": ["$instance", "$job", "$node_exporter", "$top_x"],
       "datasource_variable": "${DS_PROMETHEUS}"
     }
   },
@@ -90,7 +90,7 @@
     "hardcoded_intervals": "NEVER use [5m], [1m], etc. Always use [$__rate_interval]",
     "missing_labels": "NEVER forget units, legends, or descriptions",
     "unlabeled_graphs": "Graph without labels is like ruler without numbers - useless",
-    "too_many_series": "If more than 5 series, aggregate or use topk()",
+    "too_many_series": "If more than 5 series, aggregate with sum() or use topk($top_x, ...) with a custom variable — NEVER hardcode topk(N, ...)",
     "no_documentation": "Every panel needs threshold explanations",
     "local_state": "No instance-specific hardcoding - use variables",
     "wrong_id": "Dashboard ID must be 0 or null for portability"
@@ -106,7 +106,7 @@
       "✓ Line thickness = 1, opacity = 10%",
       "✓ Dashboard ID = 0 or null",
       "✓ No hardcoded instance names or datasource UIDs (use variables)",
-      "✓ Queries with >5 results are aggregated"
+      "✓ Queries with >5 results use topk($top_x, ...) variable — no hardcoded topk(N, ...)"
     ]
   },
   "style_guide": {
