@@ -32,3 +32,39 @@ Exporters → Scrape → Local Prometheus
 - Использует HTTPS и basic auth
 - Фильтр метрик через `match[]` параметры
 - Каждый таргет должен иметь label `instance` и `job`
+
+## Rule files (recording rules + alert rules)
+
+Rule files используются для гистерезиса в алертах — чтобы порог срабатывания и порог восстановления были разными и не было лишнего шума.
+
+**Подключение:**
+
+Добавить в `prometheus.yml`:
+```yaml
+rule_files:
+  - "/etc/prometheus/rules/*.yml"
+```
+
+Путь указывается относительно рабочей директории Prometheus (не конфига). Лучше использовать абсолютный путь.
+
+**Добавление правил:**
+
+Создать файл в папке `rules/`, например `rules/disk.yml`. Структура файла — см. `rules/disk.yml` в этом репозитории.
+
+После изменений — перезапустить Prometheus:
+```bash
+sudo systemctl restart prometheus
+```
+Или reload без перезапуска (если включён `--web.enable-lifecycle`):
+```bash
+curl -X POST http://localhost:9090/-/reload
+```
+
+**Проверка в UI:**
+
+- `http://localhost:9090/rules` — список всех загруженных правил и ошибки парсинга
+- `http://localhost:9090/alerts` — состояние alert rules (Inactive / Pending / Firing)
+
+**Примечание про Grafana:**
+
+Prometheus alert rules отображаются в Grafana в разделе Alerting → Alert rules как "Data source-managed". Это внутренние sub-алерты — реальные уведомления отправляет только Grafana-managed алерт поверх них. Чтобы скрыть их от команды: Data Sources → Prometheus → отключить **"Manage alerts via Alerting UI"**.

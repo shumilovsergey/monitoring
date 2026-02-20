@@ -25,12 +25,12 @@
 {{- end }}
 {{- end }}
 
-{{- if .Annotations }}
+{{- $summary := index .Annotations "summary" }}
+{{- if $summary }}
 
 Описание:
-{{- range .Annotations.SortedPairs }}
-- {{ template "mdv2.escape" .Value }}
-{{- end }}
+- {{ .Labels.instance }}
+- {{ $summary }}
 {{- end }}
 {{- end }}
 

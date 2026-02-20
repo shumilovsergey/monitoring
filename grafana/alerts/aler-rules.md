@@ -39,7 +39,8 @@ up{job=~"node_exporter|windows_exporter"}
 )
 
 ```
-- IS ABOVE: 90%
+- IS ABOVE: 90% (firing)
+- IS BELLOW: 75% (resolving)
 - NO DATA: Last Value
 - Уже 15 минут нагрузка на CPU больше 90%
 - {{ $labels.instance }}
@@ -76,7 +77,8 @@ up{job=~"node_exporter|windows_exporter"}
 
 ```
 
-- IS ABOVE: 95
+- IS ABOVE: 95 (firing)
+- IS BELLOW: 80% (resolving)
 - NO DATA: Last Value
 - Осталось меньше 5% RAM
 - {{ $labels.instance }}
@@ -113,7 +115,8 @@ up{job=~"node_exporter|windows_exporter"}
 
 
 ```
-- IS BELLOW: 10
+- IS BELLOW: 10 (firing)
+- IS ABOVE: 20 (resolving)
 - NO DATA: Last Value
 - На системном разделе осталось меньше 10% свободного места
 - {{ $labels.instance }}
@@ -201,3 +204,28 @@ or
 - На data-диске свободного места меньше 5% и  10Gb
 - {{ $labels.instance }}
 
+
+## Data HDD (Hysteresis)
+
+> Это Grafana-часть алерта с гистерезисом. У этого алерта есть Prometheus-часть — см. `prometheus/rules/disk.yml`.
+>
+> Идея: Prometheus держит два sub-алерта (`DiskFreePercentLow` и `DiskFreeGibLow`) с разными порогами срабатывания и восстановления. Grafana только проверяет, что оба одновременно в состоянии firing, и отправляет уведомление.
+>
+> Grafana-алерт сам по себе гистерезиса не имеет — вся логика гистерезиса живёт в Prometheus rules.
+
+**Grafana query:**
+```
+ALERTS{alertname="DiskFreePercentLow", alertstate="firing"}
+  * on(instance)
+ALERTS{alertname="DiskFreeGibLow", alertstate="firing"}
+```
+
+- Threshold: IS ABOVE 0
+- No data: OK
+
+**Пороги (настраиваются в `prometheus/rules/disk.yml`):**
+
+| | Срабатывание | Восстановление |
+|---|---|---|
+| Проценты | < 5% | > 10% |
+| Гигабайты | < 50 GB | > 70 GB |
