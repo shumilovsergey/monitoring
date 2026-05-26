@@ -616,8 +616,9 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "round(100 - (node_filesystem_avail_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\"} / node_filesystem_size_bytes{job=\"$node_exporter\", fstype!~\"tmpfs|fuse.*|squashfs|iso9660\", mountpoint!~\"/boot.*|/snap.*\"} * 100))",
+          "expr": "round(\n100 -\n(\nnode_filesystem_avail_bytes{\n    job=\"$node_exporter\",\n    fstype!~\"tmpfs|fuse.*|squashfs|iso9660|parsecfs|overlay|nsfs|proc|sysfs|cgroup.*\",\n    mountpoint!~\"/boot.*|/snap.*|/proc.*|/sys.*|/run.*\"\n}\n/\nnode_filesystem_size_bytes{\n    job=\"$node_exporter\",\n    fstype!~\"tmpfs|fuse.*|squashfs|iso9660|parsecfs|overlay|nsfs|proc|sysfs|cgroup.*\",\n    mountpoint!~\"/boot.*|/snap.*|/proc.*|/sys.*|/run.*\"\n}\n*100\n)\n)",
           "format": "table",
+          "hide": false,
           "instant": true,
           "refId": "D"
         },
@@ -2347,7 +2348,7 @@
   "timezone": "Europe/Moscow",
   "title": "⭐️ Обзор инфры (windows+linux)",
   "uid": "shumilov-infra-table",
-  "version": 38,
+  "version": 39,
   "weekStart": "",
   "id": null
 }
