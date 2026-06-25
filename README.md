@@ -1,6 +1,6 @@
 # Monitoring Stack
 
-![cover](/static/cover.webp)
+![cover](/static/baner.webp)
 
 Мониторинг инфраструктуры на базе Prometheus, Thanos и Grafana.
 
