@@ -1,8 +1,13 @@
 # Monitoring Stack
 
+![cover](/static/cover.webp)
+
 Мониторинг инфраструктуры на базе Prometheus, Thanos и Grafana.
 
-![Архитектура](static/monitoring-2.png)
+## Схема
+
+Пример архитектуры:
+![Архитектура](/static/monitoring.webp)
 
 ## Подготовка системы
 

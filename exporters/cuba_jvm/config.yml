@@ -4,6 +4,16 @@
 lowercaseOutputName: true
 lowercaseOutputLabelNames: true
 
+whitelistObjectNames:
+  - "java.lang:type=Memory"
+  - "java.lang:type=GarbageCollector,*"
+  - "java.lang:type=Threading"
+  - "java.lang:type=ClassLoading"
+  - "java.lang:type=OperatingSystem"
+  - "Catalina:type=ThreadPool,*"
+  - "Catalina:type=GlobalRequestProcessor,*"
+  - "Catalina:type=Manager,*"
+
 rules:
   # JVM Memory
   - pattern: "java.lang<type=Memory><HeapMemoryUsage>(.+): (.+)"
@@ -15,7 +25,7 @@ rules:
   - pattern: "java.lang<type=GarbageCollector, name=(.+)><>(.+): (.+)"
     name: jvm_gc_$2
     labels:
-      gc: $1
+      gc: "$1"
     value: $3
     type: GAUGE
 
@@ -25,12 +35,30 @@ rules:
     value: $2
     type: GAUGE
 
-  # Tomcat/CUBA specific
-  - pattern: 'Catalina<type=ThreadPool, name="(.+)"><>(.+):'
+  # Tomcat Thread Pool
+  - pattern: 'Catalina<type=ThreadPool, name="(.+)"><>(currentThreadCount|currentThreadsBusy|maxThreads|connectionCount): (.+)'
     name: tomcat_threadpool_$2
     labels:
-      pool: $1
+      pool: "$1"
+    value: $3
     type: GAUGE
 
-  # Default rule - export everything else
+  # Tomcat Requests
+  - pattern: 'Catalina<type=GlobalRequestProcessor, name="(.+)"><>(requestCount|errorCount|bytesReceived|bytesSent|processingTime|maxTime): (.+)'
+    name: tomcat_requestprocessor_$2
+    labels:
+      connector: "$1"
+    value: $3
+    type: COUNTER
+
+  # Tomcat Sessions
+  - pattern: 'Catalina<type=Manager, host=(.+), context=(.+)><>(activeSessions|sessionCounter|expiredSessions|rejectedSessions|maxActive): (.+)'
+    name: tomcat_sessions_$3
+    labels:
+      host: "$1"
+      context: "$2"
+    value: $4
+    type: GAUGE
+
+  # Everything else
   - pattern: ".*"
